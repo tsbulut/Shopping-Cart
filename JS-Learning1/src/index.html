@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en-US">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="author" content="Tarık Shamil Bulut">
+        <meta name="description" content="This is a Self-Development exercise for front end development!">
+        
+        <title>Self-Development (JS)</title>
+
+        <link rel="icon" type="image/icon" href="assets/favicon.png">
+        <link rel="stylesheet" href="style.css">
+    </head>
+    <body>
+        <script src="script.js" defer></script>
+
+        <div id="mainContent">
+            <div id=left>
+                <h2>Product Inputs</h2>
+                <hr>
+                <div class="Inputs">
+                    <form>
+                            <span>
+                            <label for="nameID">Name:</label>
+                            <input type="text" name="name" id="nameID">
+                            </span>
+                            <hr>
+                            <span>
+                            <label for="quantityID">Quantity:</label>
+                            <input type="number" name="quantity" id="quantityID">
+                            </span>
+                            <hr>
+                            <span>
+                            <label for="priceID">Price:</label>
+                            <input type="number" name="price" id="priceID">
+                            </span>
+
+                    </form>
+                    <div class="Buttons">
+                        <button name="addButton" id="addButton">Add to Cart</button>
+                        <button name="updateButton" id="updateButton">Update Quantity</button>
+                        <button name="removeButton" id="removeButton">Remove Item</button>
+                        <button name="emptyButton" id="emptyButton">Empty Cart</button>
+                    </div>
+                </div>
+                
+            </div>
+
+            <div id="right">
+                <div class="Display">
+                    <h2 id="cartMessage">Shopping Cart<hr></h2>
+                    <table id="arrayTable">
+                        <tr>
+                            <th id="productHeader">Product Name</th>
+                            <th id="quantityheader">Quantity</th>
+                            <th id="priceHeader">Price</th>
+                            <th id="actionsHeader">Actions</th>
+                        </tr>
+                        <tbody id="arrayMessage"></tbody>
+                        <tfoot>
+                            <tr>
+                                <td><strong>Totals</strong></td>
+                                <td id="totalQuantityMessage"><strong>0</strong></td>
+                                <td id="totalPriceMessage"><strong>0.00</strong></td>
+                                <td></td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                    
+                    
+                </div>
+            </div>
+
+            <bottom id="bottom">
+
+
+            </bottom>
+
+        </div>
+        
+
+
+        
+    </body>
+</html>

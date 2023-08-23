@@ -1,0 +1,171 @@
+body{
+    background-color: rgb(195, 187, 212);
+    color: aliceblue;
+    
+}
+
+#mainContent > div{
+    box-sizing:border-box;
+    -moz-box-sizing:border-box;
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif
+}
+
+#left{
+    background-color:rgb(25, 26, 39);
+    margin:1%;
+    padding:1%;
+    float:left;
+    width: 48%;
+    border-right:1px solid black;
+    border-radius: 10px;
+    height: 175px;
+}
+
+#right{
+    background-color:rgb(25, 26, 39);
+    margin:1%;
+    padding:1%;
+    float:right;
+    width: 48%;
+    border-right:1px solid black;
+    background-size: cover;
+    border-radius: 10px;
+}
+
+input{
+    margin: 0 0 0 10px;
+    float: right;
+}
+
+.Inputs hr{
+    opacity: 100;
+}
+
+form{
+    width:70%;
+    height:50%;
+    padding: 5px;
+    margin: 0px;
+}
+
+.Inputs{
+    display:flex;
+    justify-content: space-around;
+    
+}
+
+.Buttons{
+    width: 100%;
+    height:50%;
+    margin: 0;
+    float:right;
+    max-width:120px;
+}
+
+.Buttons button{
+    border-radius: 4px;
+    width:120px;
+    height:25px;
+    display:block;
+    text-transform:capitalize;
+    background: aliceblue;
+    color:  rgb(25, 26, 39);
+    background: -moz-linear-gradient(left, aliceblue, 0%, rgb(187, 163, 252), 100%);
+    background: -webkit-linear-gradient(left, aliceblue, 0%, rgb(187, 163, 252), 100%);
+    background: linear-gradient(left, aliceblue, 0%, rgb(187, 163, 252), 100%);
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    text-align: center;
+   
+}
+
+.xButton, .editButton{
+    border-radius: 4px;
+    background: aliceblue;
+}
+
+.editButton:hover{
+    background:rgb(255, 232, 22)
+}
+
+.xButton:hover{
+    background:red;
+}
+
+.Buttons button:hover{
+    background: rgb(187, 163, 252);
+}
+
+.Buttons button:active{
+    background: rgb(195, 187, 212);
+    border-width: 2px;
+}
+
+.xButton:active{
+    background:rgb(114, 15, 15);
+}
+
+.editButton:active{
+    background:rgb(129, 129, 21);
+}
+
+h2{
+    text-align: left;
+    margin:2px 0px 10px 2px;
+}
+
+#bottom {
+    border-top:1px solid black;
+    clear: both;
+}
+
+#cartMessage{
+    margin-bottom: 10px;
+    align-self: center;
+}
+
+table, th, td{
+    border: 1px solid;
+    border-color:rgb(195, 187, 212);
+    border-collapse: collapse;
+    text-align:center;
+}
+
+hr{
+    background-color:rgb(195, 187, 212);
+}
+
+td:first-child, th:first-child{
+    text-align: left;
+}
+
+
+th, tfoot{
+    font-size: 120%;
+    color:rgb(187, 163, 252)
+}
+
+#TQuantity{
+    
+    text-align: center;
+    margin-left: 50%;
+}
+
+#TPrice{
+    float:right;
+    text-align: center;
+    margin-right:3%;
+}
+
+
+.Display #arrayTable{
+    width:100%
+
+}
+
+#arrayMessage{
+    /* margin:auto;
+    margin-bottom: 10px; */
+    width:100%;
+    /*text-align:center; */
+}
+
