@@ -15,37 +15,52 @@
         <script src="script.js" defer></script>
 
         <div id="mainContent">
-            <div id=left>
-                <h2>Product Inputs</h2>
-                <hr>
-                <div class="Inputs">
-                    <form>
-                            <span>
-                            <label for="nameID">Name:</label>
-                            <input type="text" name="name" id="nameID">
-                            </span>
-                            <hr>
-                            <span>
-                            <label for="quantityID">Quantity:</label>
-                            <input type="number" name="quantity" id="quantityID">
-                            </span>
-                            <hr>
-                            <span>
-                            <label for="priceID">Price:</label>
-                            <input type="number" name="price" id="priceID">
-                            </span>
+            <div id="left">
+                <div id=leftUp>
+                    
+                    <div class="Inputs">
+                        <h2>Product Inputs</h2>
+                        <hr>
+                        <form>
+                                <span>
+                                <label for="nameID">Name:</label>
+                                <input type="text" name="name" id="nameID" placeholder="Product Name">
+                                </span>
+                                <hr>
+                                <span>
+                                <label for="quantityID">Quantity:</label>
+                                <input type="number" name="quantity" id="quantityID" placeholder="Product Quantity">
+                                </span>
+                                <hr>
+                                <span>
+                                <label for="priceID">Price:</label>
+                                <input type="number" name="price" id="priceID" placeholder="Product Price">
+                                </span>
 
-                    </form>
-                    <div class="Buttons">
-                        <button name="addButton" id="addButton">Add to Cart</button>
-                        <button name="updateButton" id="updateButton">Update Quantity</button>
-                        <button name="removeButton" id="removeButton">Remove Item</button>
-                        <button name="emptyButton" id="emptyButton">Empty Cart</button>
+                        </form>
+                        <div class="Buttons">
+                            <button name="addButton" id="addButton">Add to Cart</button>
+                            <button name="updateButton" id="updateButton">Update Quantity</button>
+                            <button name="removeButton" id="removeButton">Remove Item</button>
+                            <button name="emptyButton" id="emptyButton">Empty Cart</button>
+                        </div>
+                    </div>  
+                </div>
+
+                <div id="leftDown">
+                    <div class="LastCart">
+                        <div id="leftDownHeader">
+                            <h2>Latest Cart</h2>
+                            <button name="recallButton" id="recallButton">Recall Cart</button>
+                        </div>
+                        <hr>
+                        <div id="LastCartList">
+                        </div>
+                        <!-- <hr>
+                        <button name="resetButton" -->
                     </div>
                 </div>
-                
             </div>
-
             <div id="right">
                 <div class="Display">
                     <h2 id="cartMessage">Shopping Cart<hr></h2>

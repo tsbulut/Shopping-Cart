@@ -1,3 +1,23 @@
+const accessKey = "46IRbXplRq0-ajSgLFMU3InfQIn5tAbj3Mtps1habeQ";
+let imagesArray = [];
+
+window.addEventListener("load", function(){
+    let lastItems = JSON.parse(localStorage.getItem("Products"));
+    let lastImagesArray = JSON.parse(localStorage.getItem("Images"));
+    let lastStoredCart = new shoppingCart;
+    lastStoredCart.items = lastItems;
+    displayLastCart(lastStoredCart, lastImagesArray);
+});
+
+window.addEventListener("beforeunload", function(){
+    //Add the products array to local storage
+    if(userCart.items.length!==0) //only re-save if there are any new carts
+    {
+        localStorage.setItem("Products", JSON.stringify(userCart.items));
+        localStorage.setItem("Images", JSON.stringify(imagesArray));
+    }
+});
+
 class item {
     constructor(name, quantity, price){
         this.name = name; this.price = price; this.quantity = quantity;
@@ -20,6 +40,13 @@ class shoppingCart {
         let index = this.findItem(item);
         if((index<0) && (item.name.trim() != "" && Number(item.quantity) > 0 && Number(item.price > 0))){ //new item
             this.items.push(item);
+            //Every time a new item is pushed we should also push the image link to imagesArray
+            let response = searchImage(item.name);
+            response.then(function(result) { //
+                imagesArray.push(result);
+                displayLastCart(userCart, imagesArray); //we need to wait for the confirmation before displaying here
+            });
+
         }
         else if(index >= 0 && (Number(item.quantity) > 0)){ //valid name but index is found (item already exists)
             this.items[index].quantity += Number(item.quantity);
@@ -55,6 +82,7 @@ class shoppingCart {
         if(index >= 0){ //error check
             if(item.quantity == "" || item.quantity >= this.items[index].quantity){ //remove whole
                 this.items.splice(index, 1); //using splice method to remove this item and re-append the remaining array
+                imagesArray.splice(index, 1); //imagesArray will always match the items array in terms of index
             }
             else{ //Quantity was specified as less than total quantity
                 this.items[index].quantity -= Number(item.quantity);
@@ -69,6 +97,8 @@ class shoppingCart {
         this.items = [];
         this.totalQuantity = 0;
         this.totalPrice = 0;
+
+        imagesArray = [];
     }
 }
 
@@ -77,6 +107,7 @@ var userCart = new shoppingCart();
 var table = document.getElementById("arrayTable");
 
 var display = document.getElementById("arrayMessage");
+var displayLast = document.getElementById("LastCartList")
 var displayPrice = document.getElementById("totalPriceMessage");
 var displayQuantity = document.getElementById("totalQuantityMessage");
 
@@ -90,6 +121,7 @@ var addButton = document.getElementById("addButton");
 var updateButton = document.getElementById("updateButton");
 var removeButton = document.getElementById("removeButton");
 var emptyButton = document.getElementById("emptyButton");
+var recallButton = document.getElementById("recallButton");
 
 //calls displayCart function whenever a button is pressed
 addButton.addEventListener('click', function(){
@@ -101,20 +133,31 @@ updateButton.addEventListener('click', function(){
     updateItem = new item(nameInput.value, Number(quantityInput.value),Number(priceInput.value));
     userCart.updateQuantity(updateItem, Number(quantityInput.value));
     displayCart(userCart);
+    displayLastCart(userCart, imagesArray);
 });
 removeButton.addEventListener('click', function(){
     delItem = new item(nameInput.value, Number(quantityInput.value), Number(priceInput.value));
     userCart.removeItem(delItem);
     displayCart(userCart);
+    displayLastCart(userCart, imagesArray);
 });
 emptyButton.addEventListener('click', function(){
     userCart.emptyCart();
+    displayCart(userCart);
+    displayLastCart(userCart, imagesArray);
+});
+recallButton.addEventListener('click', function(){//Recall items from localStorage
+    //Re-instate previous cart
+    userCart.items = JSON.parse(localStorage.getItem("Products")); //replace old items to current shopping cart
+    imagesArray = JSON.parse(localStorage.getItem("Images"));
     displayCart(userCart);
 });
 
 function removeEntry(index){//based on indexed position in table => can skip finding index process
     userCart.items.splice(index, 1);
+    imagesArray.splice(index,1);
     displayCart(userCart);
+    displayLastCart(userCart, imagesArray);
 }
 
 function editEntry(index){
@@ -135,15 +178,32 @@ function editEntry(index){
     else{
         alert("That product already exists! :(");
     }
-             
-
+            
     displayCart(userCart);
+    displayLastCart(userCart, imagesArray);
+}
+
+let keyword = "";
+let page = 1;
+let per_page = 1;
+
+
+async function searchImage(newKeyword){
+    keyword = newKeyword;
+    const url = `https://api.unsplash.com/search/photos?page=${page}&per_page=${per_page}&query=${keyword}&client_id=${accessKey}`;
+
+    const response = await fetch(url);
+    const data = await response.json();
+
+    let result = data.results[0].urls.small;
+    return (result);
 }
 
 function displayCart(shoppingCart){
     //Reset the table
 
     display.innerHTML = ""; //reset display
+    
     shoppingCart.totalPrice = 0; //reset price
     shoppingCart.totalQuantity = 0; //reset quantity
 
@@ -152,31 +212,40 @@ function displayCart(shoppingCart){
         shoppingCart.totalPrice += Number(element.price * element.quantity);
         shoppingCart.totalQuantity += Number(element.quantity);
 
-        // let toAdd = element.name + "   <strong>|</strong>  " + element.quantity + "   <strong>|</strong>   " + element.price;
-        // display.innerHTML += toAdd;
-        // display.innerHTML += "<br>";
-
-        let toAdd = "<tr> <td>" + element.name + "</td> <td>" + (element.quantity) + "</td> <td>" + element.price + "</td> <td>"
+        //Adding to the display array for shopping cart
+        let toAdd = "<tr> <td>" + element.name + "</td> <td>" + element.quantity + "</td> <td>" + element.price + "</td> <td>"
         + "<button name=xButton class=xButton value=" + index + " onClick=removeEntry(value)>X</button> "
         + "<button name=editButton class=editButton value=" + index + " onClick=editEntry(value)>Edit</button> " 
         + "</td> </tr>"
-        arrayMessage.innerHTML += toAdd;
+        display.innerHTML += toAdd;
 
-        //Add to the table
-        // let row = table.insertRow(-1);
-        // let c1 = row.insertCell(0); let c2 = row.insertCell(1); let c3 = row.insertCell(2);
-        // c1.value = element.name; c2.value = element.quantity; c3.value = element.price;
+        // setTimeout(function() {
+        //     let toAddLast = "<div> <img src=" + imagesArray[index] + " " + "width=100px height=120px>"
+        //     + "<h4>" + element.name + "</h4>" + "<p>Quantity: " + element.quantity + "</p> <p>Price: " + element.price + "</p> </div>";
+        //     displayLast.innerHTML += toAddLast;
+        // }, 500);
+
     });
 
     displayPrice.innerHTML = (shoppingCart.totalPrice).toFixed(2);
     displayQuantity.innerHTML = (shoppingCart.totalQuantity).toFixed();
 
-    //Add the products array to local storage
-    localStorage.setItem("Products", JSON.stringify(shoppingCart.items));
-
     //Reset input boxes
     nameInput.value = "";
     priceInput.value = "";
     quantityInput.value = "";
+}
+
+function displayLastCart(shoppingCart, images)
+{
+    displayLast.innerHTML = ""; //reset Last Cart before adding to it
+
+    (shoppingCart.items).forEach(function parse(element, index) {
+        let toAddLast = "<div> <img src=" + images[index] + " " + "width=100px height=120px>"
+        + "<h4>" + element.name + "</h4>" + "<p>Quantity: " + element.quantity + "</p> <p>Price: " + element.price + "</p> </div>";
+        displayLast.innerHTML += toAddLast;
+    });
+    
+    
 }
 
