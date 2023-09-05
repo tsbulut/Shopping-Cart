@@ -32,4 +32,12 @@
 
 - Additional checks are done to ensure no duplicate items will be listed, no incorrect or 'empty' namings are accepted, etc.
 
-  
+  ## [0.0.2] - Last Cart Feature is added 2023-09-05
+
+### Added
+
+- Store images of each item as url links in an images array using Unsplash free images search api (displayed as last cart along with info on bottom left)
+
+- Utilize localstorage on cart and images to save last cart so that it stays when page is refreshed.
+
+- Can recall last cart to reobtain cart data from previous session and edit, add or remove values as previously available
